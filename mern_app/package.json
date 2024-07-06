@@ -1,0 +1,17 @@
+{
+  "name": "node_backend",
+  "version": "1.0.0",
+  "description": "backend for node and PG",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "munim",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.5"
+  }
+}
