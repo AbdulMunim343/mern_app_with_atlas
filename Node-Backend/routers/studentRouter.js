@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const {getAllStudens} = require('./controllers/studentController');
 
-///Get all students
-router.get('/',(req, res) => {
-    res.json({msg:'get student'})
-});
+//Get all students
+router.get('/',getAllStudens);
 
 //Get single student
 router.get('/:id',(req, res) => {
