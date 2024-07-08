@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const {getAllStudens} = require('./controllers/studentController');
+const {
+    createStudent,
+    getAllStudents,
+    getStudentById,
+} = require('../controllers/studentController');
+
 
 //Get all students
-router.get('/',getAllStudens);
+router.get('/',getAllStudents);
 
 //Get single student
-router.get('/:id',(req, res) => {
-    res.json({msg:'get student'})
-});
+router.get('/:id',getStudentById);
 
 //Create a new student
-router.post('/',(req, res) => {
-    res.json({msg:'get student'})
-});
+router.post('/',createStudent);
 
 //Delete a student
 router.delete('/:id',(req, res) => {
