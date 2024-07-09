@@ -34,6 +34,7 @@ const createStudent = async(req,res) => {
     }
 };
 
+//Delete a student
 const deleteStudent = async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -48,6 +49,7 @@ const deleteStudent = async (req, res) => {
     res.status(200).json({ message: 'Student deleted' });
 };
 
+//Update a student
 const updateStudent = async(req,res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
