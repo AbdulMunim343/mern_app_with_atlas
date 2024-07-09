@@ -4,6 +4,8 @@ const {
     createStudent,
     getAllStudents,
     getStudentById,
+    deleteStudent,
+    updateStudent
 } = require('../controllers/studentController');
 
 
@@ -17,13 +19,9 @@ router.get('/:id',getStudentById);
 router.post('/',createStudent);
 
 //Delete a student
-router.delete('/:id',(req, res) => {
-    res.json({msg:'get student'})
-});
+router.delete('/:id',deleteStudent);
 
 //Update a student
-router.patch('/:id',(req, res) => {
-    res.json({msg:'get student'})
-});
+router.patch('/:id',updateStudent);
 
 module.exports = router;

@@ -23,7 +23,7 @@ const getStudentById = async (req, res) => {
 };
 
 // Create a new student
-const createStudent = async (req, res) => {
+const createStudent = async(req,res) => {
     const { student_name, father_name, contact_number, course_name } = req.body;
     // Add to DB
     try {
@@ -34,9 +34,41 @@ const createStudent = async (req, res) => {
     }
 };
 
+const deleteStudent = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Student not found' });
+    }
+
+    const student = await Student.findOneAndDelete({_id:id});
+
+    if (!student) {
+        return res.status(404).json({ error: 'Student not found' });
+    }
+    res.status(200).json({ message: 'Student deleted' });
+};
+
+const updateStudent = async(req,res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Student not found' });
+    }
+
+    const student = await Student.findOneAndUpdate({_id:id},{
+      ...req.body  
+    });
+
+    if (!student) {
+        return res.status(404).json({ error: 'Student not found' });
+    }
+    res.status(200).json({ message: 'Student Updated' });
+};
+
 // Export the functions
 module.exports = {
     createStudent,
     getAllStudents,
     getStudentById,
+    deleteStudent,
+    updateStudent
 };

@@ -1,5 +1,6 @@
 //environment file
 require('dotenv').config();
+const bodyParser = require('body-parser');
 
 //imports
 const express = require('express');
@@ -8,6 +9,8 @@ const studentRouter = require('./routers/studentRouter');
 
 //express app
 const app = express();
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //routes
