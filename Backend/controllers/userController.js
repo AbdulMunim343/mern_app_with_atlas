@@ -1,6 +1,24 @@
 const User = require('../models/userModel');
 const mongoose = require('mongoose');
 
+
+//login user 
+const loginUser = async () => {
+
+}
+
+//signup user 
+const signupUser = async (req,res) => {
+    const { email, password } = req.body;
+    // Add to DB
+    try {
+        const user = await User.convertpassToHash(email, password);
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}
+
 // Get all users
 const getAllUsers = async (req, res) => {
     const users = await User.find({}).sort({ createdAt: -1 });
@@ -22,18 +40,6 @@ const getUserById = async (req, res) => {
     res.status(200).json(user);
 };
 
-// Create a new user
-const createUser = async(req,res) => {
-    const { user_name, email, password } = req.body;
-    // Add to DB
-    try {
-        const user = await User.create({ user_name, email, password });
-        res.status(200).json(user);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
-};
-
 //Delete a user
 const deleteUser = async (req, res) => {
     const { id } = req.params;
@@ -41,7 +47,7 @@ const deleteUser = async (req, res) => {
         return res.status(404).json({ error: 'user not found' });
     }
 
-    const user = await User.findOneAndDelete({_id:id});
+    const user = await User.findOneAndDelete({ _id: id });
 
     if (!user) {
         return res.status(404).json({ error: 'user not found' });
@@ -50,14 +56,14 @@ const deleteUser = async (req, res) => {
 };
 
 //Update a user
-const updateUser = async(req,res) => {
+const updateUser = async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ error: 'user not found' });
     }
 
-    const user = await User.findOneAndUpdate({_id:id},{
-      ...req.body  
+    const user = await User.findOneAndUpdate({ _id: id }, {
+        ...req.body
     });
 
     if (!user) {
@@ -68,7 +74,7 @@ const updateUser = async(req,res) => {
 
 // Export the functions
 module.exports = {
-    createUser,
+    signupUser,
     getAllUsers,
     getUserById,
     deleteUser,

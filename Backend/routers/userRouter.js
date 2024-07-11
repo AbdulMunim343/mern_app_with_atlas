@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
-    createUser,
+    signupUser,
     getAllUsers,
     getUserById,
     deleteUser,
@@ -15,8 +15,8 @@ router.get('/',getAllUsers);
 //Get single student
 router.get('/:id',getUserById);
 
-//Create a new student
-router.post('/',createUser);
+//signup user
+router.post('/',signupUser);
 
 //Delete a student
 router.delete('/:id',deleteUser);
