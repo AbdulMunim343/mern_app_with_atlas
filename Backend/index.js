@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 //imports
 const express = require('express');
 const mongoose = require('mongoose');
-const studentRouter = require('./routers/studentRouter');
+const employeeRouter = require('./routers/EmployeeRouter');
 const userRouter = require('./routers/userRouter');
 
 //express app
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //routes
-app.use('/api/student',studentRouter);
+app.use('/api/employee',employeeRouter);
 app.use('/api/user',userRouter);
 
 //connect to db

@@ -1,15 +1,24 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [email,setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleCreateAccountClick = () => {
         navigate('/signup');
     };
 
     const handleToStudentClick = () => {
-        navigate('/students');
+        navigate('/employee');
     };
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        console.log(email,password)
+    }
+
     return (
         <>
             <div className="flex flex-row justify-center h-screen items-center font-mono">
@@ -28,7 +37,7 @@ const Login = () => {
                             Create an account
                         </div>
                     </div>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="space-y-5">
                             <div>
                                 <label className="text-base font-medium text-stone-50">
@@ -36,6 +45,7 @@ const Login = () => {
                                 </label>
                                 <div className="mt-2">
                                     <input
+                                        onChange={(e)=>setEmail(e.target.value)}
                                         className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                         type="email"
                                         placeholder="Email"
@@ -50,6 +60,7 @@ const Login = () => {
                                 </div>
                                 <div className="mt-2">
                                     <input
+                                        onChange={(e)=>setPassword(e.target.value)}
                                         className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                         type="password"
                                         placeholder="Password"
