@@ -6,14 +6,16 @@ import AddEmployee from './pages/addemployee';
 
 const App = () => {
   return (
+    <>
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/employee" element={<Employee />} />
-        <Route path="/addemployee" element={<AddEmployee />} />
+        <Route path="/" element={<Employee />} />
+        <Route path="/addemployee/:id" element={<AddEmployee />} />
       </Routes>
     </Router>
+    </>
   );
 };
 
