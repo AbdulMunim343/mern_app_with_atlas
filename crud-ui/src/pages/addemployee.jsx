@@ -1,8 +1,8 @@
 import HeaderNave from '../components/header'
 import FooterBottom from '../components/footer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const AddEmployee = () => {
     const {user} = useAuthContext('')
@@ -11,12 +11,40 @@ const AddEmployee = () => {
     const [status,SetStatus] = useState('');
     const [role,SetRole] = useState('');
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoding] = useState(null);
-    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(null);
+    const navigate = useNavigate();
+    const {id} = useParams();
 
- const handleSubmit = async()=>{
+    useEffect(()=>{
+     const getEmpById = async() =>{
+        setError(null);
+        const response = await fetch(`http://localhost:4000/api/employee/${id}`,{
+            headers:{'Authorization':`Bearer ${user.token}`},
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+            setIsLoading(false);
+            setError(data.error);
+        }
+
+        if(response.ok){
+            SetName(data.employee_name);
+            SetTitle(data.title);
+            SetStatus(data.status);
+            SetRole(data.role);
+        }
+        }
+        if(id !== 'emp'){
+            getEmpById();
+        }
+    },[])
+
+ const handleSubmit = async(e)=>{
     e.preventDefault();
     setError(null);
+    if(id === 'emp'){
         const response = await fetch('http://localhost:4000/api/employee',{
             method:'POST',
             headers:{'Content-Type': 'application/json','Authorization':`Bearer ${user.token}`},
@@ -26,14 +54,34 @@ const AddEmployee = () => {
         const data = await response.json();
 
         if(!response.ok){
-            setIsLoding(false);
+            setIsLoading(false);
             setError(data.error);
         }
 
         if(response.ok){
-            setIsLoding(false);
+            setIsLoading(false);
             navigate('/');
         }
+    }else{
+         const response = await fetch(`http://localhost:4000/api/employee/${id}`,{
+            method:'PATCH',
+            headers:{'Content-Type': 'application/json','Authorization':`Bearer ${user.token}`},
+            body: JSON.stringify({employee_name,title,status,role})
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+            setIsLoading(false);
+            setError(data.error);
+        }
+
+        if(response.ok){
+            setIsLoading(false);
+            navigate('/');
+        }
+    }
+        
  }
     return (
         <>
@@ -57,6 +105,7 @@ const AddEmployee = () => {
                                 type="text"
                                 placeholder="Enter your name"
                                 id="Name"
+                                value={employee_name}
                                 onChange={(e)=>{SetName(e.target.value)}}
                             ></input>
                         </div>
@@ -73,6 +122,7 @@ const AddEmployee = () => {
                                 type="text"
                                 placeholder="Enter your title"
                                 id="Title"
+                                value={title}
                                 onChange={(e)=>{SetTitle(e.target.value)}}
                             ></input>
                         </div>
@@ -89,6 +139,7 @@ const AddEmployee = () => {
                                 type="text"
                                 placeholder="Enter your status"
                                 id="Status"
+                                value={status}
                                 onChange={(e)=>{SetStatus(e.target.value)}}
                             >
                                 <option value=" " className="text-black">Select</option>
@@ -108,6 +159,7 @@ const AddEmployee = () => {
                                 type="text"
                                 placeholder="Enter your role"
                                 id="Role"
+                                value={role}
                                 onChange={(e)=>{SetRole(e.target.value)}}
                             ></input>
                         </div>

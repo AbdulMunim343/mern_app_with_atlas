@@ -3,11 +3,11 @@ import {useAuthContext} from './useAuthContext';
 
 export const useSignup = () =>{
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoding] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
     const {dispatch} = useAuthContext();
 
     const signup = async(email,password) =>{
-        setIsLoding(true);
+        setIsLoading(true);
         setError(null);
 
         const response = await fetch('http://localhost:4000/api/user/signup',{
@@ -19,7 +19,7 @@ export const useSignup = () =>{
         const data = await response.json();
 
         if(!response.ok){
-            setIsLoding(false);
+            setIsLoading(false);
             setError(data.error);
         }
 
@@ -30,7 +30,7 @@ export const useSignup = () =>{
             //updated the auth context
             dispatch({type:'LOGIN',payload:data});
 
-            setIsLoding(false);
+            setIsLoading(false);
         }
 
     }
