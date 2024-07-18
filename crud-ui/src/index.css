@@ -10,3 +10,8 @@
 body {
   margin: 0;
 }
+
+.table_container_height{
+  height: calc(100% - 112px);
+  overflow: auto;
+}

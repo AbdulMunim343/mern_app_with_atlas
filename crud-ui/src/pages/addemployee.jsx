@@ -3,6 +3,7 @@ import FooterBottom from '../components/footer'
 import { useEffect, useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const AddEmployee = () => {
     const {user} = useAuthContext('')
@@ -10,14 +11,12 @@ const AddEmployee = () => {
     const [title,SetTitle] = useState('');
     const [status,SetStatus] = useState('');
     const [role,SetRole] = useState('');
-    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
     const navigate = useNavigate();
     const {id} = useParams();
 
     useEffect(()=>{
      const getEmpById = async() =>{
-        setError(null);
         const response = await fetch(`http://localhost:4000/api/employee/${id}`,{
             headers:{'Authorization':`Bearer ${user.token}`},
         });
@@ -26,7 +25,7 @@ const AddEmployee = () => {
 
         if(!response.ok){
             setIsLoading(false);
-            setError(data.error);
+            toast.error(data.error)
         }
 
         if(response.ok){
@@ -43,7 +42,6 @@ const AddEmployee = () => {
 
  const handleSubmit = async(e)=>{
     e.preventDefault();
-    setError(null);
     if(id === 'emp'){
         const response = await fetch('http://localhost:4000/api/employee',{
             method:'POST',
@@ -55,12 +53,13 @@ const AddEmployee = () => {
 
         if(!response.ok){
             setIsLoading(false);
-            setError(data.error);
+            toast.error(data.error)
         }
 
         if(response.ok){
             setIsLoading(false);
             navigate('/');
+            toast.success("Form submitted successfully!");
         }
     }else{
          const response = await fetch(`http://localhost:4000/api/employee/${id}`,{
@@ -73,12 +72,13 @@ const AddEmployee = () => {
 
         if(!response.ok){
             setIsLoading(false);
-            setError(data.error);
+            toast.error(data.error)
         }
 
         if(response.ok){
             setIsLoading(false);
             navigate('/');
+            toast.success("Updated employee successfully!");
         }
     }
         
@@ -180,7 +180,6 @@ const AddEmployee = () => {
                         </button>
                     </div>
                     </form>
-                    {error && <div className=" mt-2.5 bg-red-500 text-white font-bold rounded px-4 py-2"> {error}</div>}
                 </div>
             </div>
             <FooterBottom/>

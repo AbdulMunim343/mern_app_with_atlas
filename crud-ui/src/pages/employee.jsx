@@ -3,16 +3,15 @@ import HeaderNave from '../components/header'
 import FooterBottom from '../components/footer'
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { toast } from 'react-toastify'
 
 const Employee = () => {
     const navigate = useNavigate();
     const { user } = useAuthContext();
     const [employee, setEmployee] = useState([]);
-    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
 
     const getEmployee = async () => {
-        setIsLoading(true);
         const response = await fetch('http://localhost:4000/api/employee', {
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
@@ -20,7 +19,7 @@ const Employee = () => {
         const data = await response.json();
         if (!response.ok) {
             setIsLoading(false);
-            setError(data.error);
+            toast.error(data.error);
         }
 
         if (response.ok) {
@@ -32,6 +31,7 @@ const Employee = () => {
     }
 
     useEffect(() => {
+        console.log(employee)
         if (user) {
             getEmployee();
         }
@@ -58,12 +58,13 @@ const Employee = () => {
         const data = await response.json();
         if (!response.ok) {
             setIsLoading(false);
-            setError(data.error);
+            toast.error(data.error);
         }
 
         if (response.ok) {
             getEmployee();
             setIsLoading(false);
+            toast.error("Employee deleted successfully!");
         }
     };
     return (
@@ -87,9 +88,9 @@ const Employee = () => {
                             </span>
                         </button>
                     </div>
-
-                    <table className="min-w-full divide-y divide-gray-200 mt-2.5">
-                        <thead className="bg-blue-800 text-white">
+                    <div className="table_container_height table-wrp block mt-2.5">
+                    <table className="min-w-full divide-y divide-gray-200 ">
+                        <thead className="bg-blue-800 text-white sticky top-0">
                             <tr>
                                 <th scope="col" className="px-4 py-3.5 text-left text-sm font-normal">
                                     <span>Employee</span>
@@ -111,7 +112,9 @@ const Employee = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 text-white">
-                            {employee.map((emp, i) => (
+                            {employee.length == 0? <tr><td className=" mt-2.5 bg-red-500 text-white font-bold rounded px-4 py-2" colSpan={5}> data not found</td></tr>
+                            :
+                            employee.map((emp, i) => (
                                 <tr key={i}>
                                     <td className="whitespace-nowrap px-4 py-4">
                                         <div className="flex items-center">
@@ -123,31 +126,31 @@ const Employee = () => {
                                                 />
                                             </div>
                                             <div className="ml-4">
-                                                <div className="text-sm font-medium">{emp.employee_name}</div>
+                                                <div className="text-sm font-medium capitalize">{emp.employee_name}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="whitespace-nowrap px-12 py-4">
-                                        <div className="text-sm">{emp.title}</div>
+                                        <div className="text-sm capitalize">{emp.title}</div>
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-4">
                                         {emp.status == 'active' ?
-                                            <span className="inline-flex rounded-full bg-green-800 px-2 text-xs font-semibold leading-5 text-white">
+                                            <span className="inline-flex rounded-full bg-green-800 px-2 text-xs font-semibold leading-5 text-white capitalize">
                                                 {emp.status}
                                             </span> :
-                                            <span className="inline-flex rounded-full bg-red-800 px-2 text-xs font-semibold leading-5 text-white">
+                                            <span className="inline-flex rounded-full bg-red-800 px-2 text-xs font-semibold leading-5 text-white capitalize">
                                                 {emp.status}
                                             </span>}
 
                                     </td>
-                                    <td className="whitespace-nowrap px-4 py-4 text-sm ">
+                                    <td className="whitespace-nowrap px-4 py-4 text-sm capitalize">
                                         {emp.role}
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-4 text-sm font-medium">
-                                        <span className="mr-2.5 cursor-pointer" onClick={() => onEdit(emp._id)}>
+                                        <span className="mr-2.5 cursor-pointer text-blue-600" onClick={() => onEdit(emp._id)}>
                                             Edit
                                         </span>
-                                        <span className="mr-2.5 cursor-pointer" onClick={() => onDelete(emp._id)}>
+                                        <span className="mr-2.5 cursor-pointer text-red-600" onClick={() => onDelete(emp._id)}>
                                             Delete
                                         </span>
                                     </td>
@@ -155,6 +158,7 @@ const Employee = () => {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
             <FooterBottom />
