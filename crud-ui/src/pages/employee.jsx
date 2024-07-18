@@ -12,7 +12,8 @@ const Employee = () => {
     const [isLoading, setIsLoading] = useState(null);
 
     const getEmployee = async () => {
-        const response = await fetch('http://localhost:4000/api/employee', {
+        setIsLoading(true);
+        const response = await fetch('https://mern-app-with-atlas.vercel.app/api/employee', {
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
 
@@ -31,7 +32,6 @@ const Employee = () => {
     }
 
     useEffect(() => {
-        console.log(employee)
         if (user) {
             getEmployee();
         }
@@ -47,7 +47,7 @@ const Employee = () => {
 
     const onDelete = async (id) => {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:4000/api/employee/${id}`, {
+        const response = await fetch(`https://mern-app-with-atlas.vercel.app/api/employee/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

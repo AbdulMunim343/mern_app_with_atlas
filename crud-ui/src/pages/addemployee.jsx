@@ -17,7 +17,7 @@ const AddEmployee = () => {
 
     useEffect(()=>{
      const getEmpById = async() =>{
-        const response = await fetch(`http://localhost:4000/api/employee/${id}`,{
+        const response = await fetch(`https://mern-app-with-atlas.vercel.app/api/employee/${id}`,{
             headers:{'Authorization':`Bearer ${user.token}`},
         });
 
@@ -43,7 +43,7 @@ const AddEmployee = () => {
  const handleSubmit = async(e)=>{
     e.preventDefault();
     if(id === 'emp'){
-        const response = await fetch('http://localhost:4000/api/employee',{
+        const response = await fetch('https://mern-app-with-atlas.vercel.app/api/employee',{
             method:'POST',
             headers:{'Content-Type': 'application/json','Authorization':`Bearer ${user.token}`},
             body: JSON.stringify({employee_name,title,status,role})
@@ -62,7 +62,7 @@ const AddEmployee = () => {
             toast.success("Form submitted successfully!");
         }
     }else{
-         const response = await fetch(`http://localhost:4000/api/employee/${id}`,{
+         const response = await fetch(`https://mern-app-with-atlas.vercel.app/api/employee/${id}`,{
             method:'PATCH',
             headers:{'Content-Type': 'application/json','Authorization':`Bearer ${user.token}`},
             body: JSON.stringify({employee_name,title,status,role})
