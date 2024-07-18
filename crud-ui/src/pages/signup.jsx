@@ -31,7 +31,7 @@ const SignUp = () => {
                         Sign Up
                     </h2>
                     <div className="mt-2.5 text-center text-stone-50 flex mb-2.5">
-                        Don&apos;t have an account?
+                    Already have an account?
                         <div
                             onClick={handleLoginClick}
                             className="font-semibold cursor-pointer text-blue-600 transition-all duration-200 hover:underline ml-1">
