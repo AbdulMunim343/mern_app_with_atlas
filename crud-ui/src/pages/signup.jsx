@@ -23,7 +23,7 @@ const SignUp = () => {
         <>
         <HeaderNave/>
             <div className="flex flex-row justify-center h-screen items-center font-mono">
-                <div className='basis-4/12'>
+                <div className='lg:basis-4/12 md:basis-4/12 basis-full lg:p-0 md:p-0 px-2.5'>
                     <div className="mb-2 flex justify-center">
                         <img src='/devlogic.png' className='w-15 h-20' />
                     </div>

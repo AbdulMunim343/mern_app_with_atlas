@@ -71,7 +71,7 @@ const Employee = () => {
         <>
             <HeaderNave />
             <div className="flex flex-row justify-center h-screen font-mono">
-                <div className='basis-9/12 mt-20'>
+                <div className='lg:basis-9/12 md:basis-9/12 mt-20 lg:p-0 md:p-0 px-2.5 w-svw'>
                     <div className="flex justify-between items-center">
                         <h2 className="text-lg font-semibold text-white">Employees</h2>
                         <button type="button" disabled={isLoading} className="rounded-md bg-blue-800 px-3 py-2 text-sm font-semibold text-white shadow-sm" onClick={handleToStudentClick}>
@@ -89,7 +89,7 @@ const Employee = () => {
                         </button>
                     </div>
                     <div className="table_container_height table-wrp block mt-2.5">
-                    <table className="min-w-full divide-y divide-gray-200 ">
+                    <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-blue-800 text-white sticky top-0">
                             <tr>
                                 <th scope="col" className="px-4 py-3.5 text-left text-sm font-normal">
