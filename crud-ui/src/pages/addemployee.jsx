@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import APP_BASE_URL from '../../config'
 
 const AddEmployee = () => {
     const {user} = useAuthContext('')
@@ -17,7 +18,7 @@ const AddEmployee = () => {
 
     useEffect(()=>{
      const getEmpById = async() =>{
-        const response = await fetch(`https://mern-app-with-atlas.vercel.app/api/employee/${id}`,{
+        const response = await fetch(`${APP_BASE_URL}/api/employee/${id}`,{
             headers:{'Authorization':`Bearer ${user.token}`},
         });
 
@@ -43,7 +44,7 @@ const AddEmployee = () => {
  const handleSubmit = async(e)=>{
     e.preventDefault();
     if(id === 'emp'){
-        const response = await fetch('https://mern-app-with-atlas.vercel.app/api/employee',{
+        const response = await fetch(`${APP_BASE_URL}/api/employee`,{
             method:'POST',
             headers:{'Content-Type': 'application/json','Authorization':`Bearer ${user.token}`},
             body: JSON.stringify({employee_name,title,status,role})
@@ -62,7 +63,7 @@ const AddEmployee = () => {
             toast.success("Form submitted successfully!");
         }
     }else{
-         const response = await fetch(`https://mern-app-with-atlas.vercel.app/api/employee/${id}`,{
+         const response = await fetch(`${APP_BASE_URL}/api/employee/${id}`,{
             method:'PATCH',
             headers:{'Content-Type': 'application/json','Authorization':`Bearer ${user.token}`},
             body: JSON.stringify({employee_name,title,status,role})

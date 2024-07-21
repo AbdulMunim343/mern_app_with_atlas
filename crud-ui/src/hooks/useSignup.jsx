@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {useAuthContext} from './useAuthContext';
 import { toast } from "react-toastify";
+import APP_BASE_URL from "../../config";
 
 export const useSignup = () =>{
     const [error, setError] = useState(null);
@@ -11,7 +12,7 @@ export const useSignup = () =>{
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch('https://mern-app-with-atlas.vercel.app/api/user/signup',{
+        const response = await fetch(`${APP_BASE_URL}/api/user/signup`,{
             method:'POST',
             headers:{'Content-Type': 'application/json',},
             body: JSON.stringify({email,password})

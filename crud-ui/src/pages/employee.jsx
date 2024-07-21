@@ -4,6 +4,7 @@ import FooterBottom from '../components/footer'
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { toast } from 'react-toastify'
+import APP_BASE_URL from "../../config";
 
 const Employee = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Employee = () => {
 
     const getEmployee = async () => {
         setIsLoading(true);
-        const response = await fetch('https://mern-app-with-atlas.vercel.app/api/employee', {
+        const response = await fetch(`${APP_BASE_URL}/api/employee`, {
             headers: { 'Authorization': `Bearer ${user.token}` }
         });
 
@@ -47,7 +48,7 @@ const Employee = () => {
 
     const onDelete = async (id) => {
         setIsLoading(true);
-        const response = await fetch(`https://mern-app-with-atlas.vercel.app/api/employee/${id}`, {
+        const response = await fetch(`${APP_BASE_URL}/api/employee/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
