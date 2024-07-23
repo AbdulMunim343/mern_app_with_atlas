@@ -5,6 +5,7 @@
 :root {
   background-color: black;
   color: white;
+  overflow: hidden;
 }
 
 body {
